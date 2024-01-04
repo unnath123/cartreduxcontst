@@ -1,5 +1,5 @@
 import React from 'react'
-import { ADD_TO_CART, DELETE_FROM_CART } from "../Actions/actionTypes";
+import { ADD_TO_CART, CLEAR_ALL, DELETE_FROM_CART } from "../Actions/actionTypes";
 
 let initialState = [];
 
@@ -10,6 +10,9 @@ const CartReducer = (state=initialState, actions) => {
     
         case DELETE_FROM_CART:
             return state.filter((ele)=>ele.id!=actions.payload)
+        
+        case CLEAR_ALL: 
+            return state.length = 0
 
         default:
             return state

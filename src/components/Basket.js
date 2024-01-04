@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
 import CardO from "./CardO";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { clear_all } from "./redux/Actions/cartActions";
 
 const Basket = () => {
   const arr = useSelector((state) => state);
+  const dispatch = useDispatch()
   const [total, setTotal] = useState(0)
+
+  function clearAll(){
+   dispatch(clear_all())
+   setTotal(0)
+  }
 
     useEffect(()=>{
         function fetchTotal(){
+            let tot=0;
             if(arr.length > 0){
-            let tot = arr.reduce((prev, curr)=> prev.price+curr.price)
+            arr.map((ele)=>{
+                tot=tot+ele.price
+            })
             setTotal(()=>tot)
             }
             
@@ -17,7 +27,7 @@ const Basket = () => {
     },[arr])
 
 
-  // console.log("Basket ",arr)
+console.log("Basket ",total)
   return (
     <div>
         <h1 style={{textAlign:"center"}}>Basket</h1>
@@ -46,7 +56,7 @@ const Basket = () => {
             
             <p>Total: {total}</p> 
             {
-                total > 0 && <button>Checkout</button>
+                total > 0 && <button onClick={clearAll}>Checkout</button>
             }      
             </div>
         </div>
